@@ -1,4 +1,4 @@
-import 'package:cozinha_fora_da_caixa/Pages/details.dart';
+
 import 'package:cozinha_fora_da_caixa/Pages/home/home.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +14,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomeScreen(),
-        '/detalhes': (context) => DetalhesScreen(),
       },
       debugShowCheckedModeBanner: false,
     );

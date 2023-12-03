@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
-  Size get preferredSize => Size.fromHeight(70); // Ajuste conforme necessário
+  Size get preferredSize => Size.fromHeight(70);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,10 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
               child: TextField(
                 textAlignVertical: TextAlignVertical.top,
                 decoration: InputDecoration(
-                  icon: Icon(Icons.search),
+                  icon: IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: null,
+                    ),
                   hintText: 'Pesquisar...',
                   border: InputBorder.none,
                 ),

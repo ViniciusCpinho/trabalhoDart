@@ -21,7 +21,7 @@ class BarButton extends StatelessWidget {
   }
 }
 
-class HomeButtonComponent extends StatelessWidget{
+class HomeButtons extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
