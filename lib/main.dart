@@ -1,5 +1,5 @@
 
-import 'package:cozinha_fora_da_caixa/Pages/home/home.dart';
+import 'package:cozinha_fora_da_caixa/Pages/home/HomeScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
