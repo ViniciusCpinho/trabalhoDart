@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cozinha_fora_da_caixa/Pages/home/types/FoodType.dart';
+import 'package:cozinha_fora_da_caixa/Pages/home/types/foodType.dart';
 import 'package:cozinha_fora_da_caixa/Pages/home/types/generalFoodType.dart';
 import 'package:cozinha_fora_da_caixa/api/api.dart';
 import 'package:flutter/material.dart';
@@ -41,34 +41,14 @@ class FoodApi{
     }
   }
 
-  static Future <List<foodType>> getFood(id) async {
-    try {
-      final response = await http.get(
-        Uri.parse('${ApiConfig.baseUrl}/cfc/Food${id}'));
+  Future<Map<String, dynamic>> foodById(int id) async {
+    final response = await http.get(Uri.parse('${ApiConfig.baseUrl}/cfc/Foods/$id'));
 
-      if (response.statusCode == 200){
-        List<dynamic> data = jsonDecode(response.body);
-
-        List<foodType> food = data.map((item) => 
-          foodType(
-            name: item['name'],
-            ocasiao: item['ocasiao'],
-            avaliation: item['avaliation'],
-            country: item['country'],
-            image: item['image'],
-            description: item['description'],
-            ingredients: item['ingredients'],
-            time: item['time'],
-            id: item['id'],
-          )
-        ).toList();
-
-        return food;
-      } else {
-        throw Exception('Erro na requisição do item: ${response.statusCode}');
-      }
-    } catch (error) {
-      throw Exception('Erro na requisição: $error');
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      return data;
+    } else {
+      throw Exception('Falha ao carregar dados da API');
     }
   }
 }

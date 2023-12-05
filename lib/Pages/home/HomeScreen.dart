@@ -6,9 +6,7 @@ import 'package:cozinha_fora_da_caixa/components/appbar.dart';
 import 'package:flutter/material.dart';
 
 
- 
-
-class HomeScreen extends StatefulWidget {
+ class HomeScreen extends StatefulWidget {
 
   @override
   _WidgetHome createState() => _WidgetHome();
@@ -38,7 +36,6 @@ class _WidgetHome extends State<HomeScreen> {
   }
 
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,8 +44,6 @@ class _WidgetHome extends State<HomeScreen> {
         SingleChildScrollView(
           child: Column(
             children: [
-              HomeContent(data: data, title: 'Sabores Destaques'),
-              HomeContent(data: data, title: 'Sabores Destaques'),
               HomeContent(data: data, title: 'Sabores Destaques'),
             ],
           )

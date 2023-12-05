@@ -25,12 +25,12 @@ class HomeContent extends StatelessWidget {
             child: Container(
               width: 300,
               height: 60,
-              color: Colors.red,
+              color: Colors.lightBlueAccent,
               alignment: Alignment.center,
               child: Text(
                     '${title}',
                     style: TextStyle(
-                      color: Colors.black ,
+                      color: Colors.white ,
                       fontSize: 16,
                     ),
                     textAlign: TextAlign.center,
