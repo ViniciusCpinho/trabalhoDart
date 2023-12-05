@@ -1,4 +1,4 @@
-class generalFoodTypes {
+class GeneralFoodType {
   final String createdAt;
   final String name;
   final String ocasiao;
@@ -10,7 +10,7 @@ class generalFoodTypes {
   final String time;
   final String id;
 
-  generalFoodTypes({
+  GeneralFoodType({
     required this.createdAt,
     required this.name,
     required this.ocasiao,

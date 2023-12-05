@@ -1,43 +1,71 @@
+
 import 'package:flutter/material.dart';
 
-class Appbar extends StatelessWidget implements PreferredSizeWidget {
-  @override
-  Size get preferredSize => Size.fromHeight(70);
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final Function(String) onSearch;
+
+  CustomAppBar({required this.title, required this.onSearch});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: Image.asset('logo/Logo.png'),
-      backgroundColor: Color.fromARGB(255, 117, 176, 156),
-      title: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              constraints: BoxConstraints(
-                maxWidth: 900,
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: TextField(
-                textAlignVertical: TextAlignVertical.top,
-                decoration: InputDecoration(
-                  icon: IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: null,
-                    ),
-                  hintText: 'Pesquisar...',
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          ],
+      title: Text(title),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {
+            showSearch(context: context, delegate: CustomSearchDelegate(onSearch));
+          },
         ),
+      ],
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+}
+
+class CustomSearchDelegate extends SearchDelegate<String> {
+  final Function(String) onSearch;
+
+  CustomSearchDelegate(this.onSearch);
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
       ),
-      toolbarHeight: 70,
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, '');
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    onSearch(query);
+    return Center(
+      child: Text('Resultados para: $query'),
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // Implemente aqui sugestões de pesquisa enquanto o usuário digita
+    return Center(
+      child: Text('Digite para buscar'),
     );
   }
 }

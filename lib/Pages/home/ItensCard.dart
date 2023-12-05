@@ -2,7 +2,7 @@ import 'package:cozinha_fora_da_caixa/Pages/home/types/generalFoodType.dart';
 import 'package:flutter/material.dart';
 
 class ItensCard extends StatelessWidget {
-  final generalFoodTypes data;
+  final GeneralFoodType data; 
 
   ItensCard({required this.data});
 
@@ -11,52 +11,74 @@ class ItensCard extends StatelessWidget {
     return Container(
       width: 300,
       decoration: BoxDecoration(
-        color: Colors.grey,
+        color: Colors.grey[200], // Usei uma cor mais clara
         borderRadius: BorderRadius.all(Radius.circular(10)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 2), // Mudança na sombra para dar mais destaque ao card
+          ),
+        ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
-                child: Text(
-                  data.ocasiao == 'AlmoÃ§o' ? 'Almoço' : data.ocasiao,
-                  textAlign: TextAlign.end,
-                  style: TextStyle(fontFamily: 'utf-8'),
-                ),
-              ),
-            ],
-          ),
           ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
             child: Image.network(
-                data.image, // Acesse a propriedade específica do objeto generalFoodTypes
-                width: 250,
-                height: 200,
-                fit: BoxFit.cover),
+              data.image,
+              width: double.infinity,
+              height: 200,
+              fit: BoxFit.cover,
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Text(data
-                .name), // Acesse a propriedade específica do objeto generalFoodTypes
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                  '${data.avaliation} min |'), // Certifique-se de que 'data.avaliacao' está correto
-              ...List<Widget>.generate(
-                data.avaliation,
-                (index) => Icon(
-                  Icons.star,
-                  color: Colors.yellow,
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  data.ocasiao == 'AlmoÃ§o' ? 'Almoço' : data.ocasiao,
+                  style: TextStyle(
+                    fontFamily: 'utf-8',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-            ],
+                SizedBox(height: 8),
+                Text(
+                  data.name,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.access_time,
+                      size: 16,
+                    ),
+                    SizedBox(width: 4),
+                    Text('${data.time}'),
+                    Spacer(),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                          size: 16,
+                        ),
+                        Text('${data.avaliation}'),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
