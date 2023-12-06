@@ -50,4 +50,6 @@ class FoodApi {
       throw Exception('Falha ao carregar dados da API');
     }
   }
+
+  
 }

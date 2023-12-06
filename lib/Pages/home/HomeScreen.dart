@@ -13,7 +13,6 @@ class HomeScreen extends StatefulWidget {
 
 class _WidgetHome extends State<HomeScreen> {
   dynamic data = [];
-  String searchQuery = '';
 
   @override
   void initState() {
@@ -38,11 +37,7 @@ class _WidgetHome extends State<HomeScreen> {
     return Scaffold(
         appBar: CustomAppBar(
           title: 'Cozinha Fora da Caixa',
-          onSearch: (query) {
-          setState(() {
-            searchQuery = query;
-          });
-        },
+          data: data,
         ),
         body: SingleChildScrollView(
             child: Column(

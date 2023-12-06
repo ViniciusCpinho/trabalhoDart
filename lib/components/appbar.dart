@@ -1,21 +1,33 @@
-
+import 'package:cozinha_fora_da_caixa/Pages/details/DetailsScreen.dart';
+import 'package:cozinha_fora_da_caixa/Pages/home/types/generalFoodType.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final Function(String) onSearch;
+  final List<GeneralFoodType> data;
 
-  CustomAppBar({required this.title, required this.onSearch});
+  CustomAppBar({required this.title, required this.data});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(fontSize: 18),
+          ),
+        ],
+      ),
       actions: [
         IconButton(
           icon: Icon(Icons.search),
           onPressed: () {
-            showSearch(context: context, delegate: CustomSearchDelegate(onSearch));
+            showSearch(
+              context: context,
+              delegate: CustomSearchDelegate(data),
+            );
           },
         ),
       ],
@@ -26,10 +38,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
 
-class CustomSearchDelegate extends SearchDelegate<String> {
-  final Function(String) onSearch;
+class CustomSearchDelegate extends SearchDelegate {
+  final List<GeneralFoodType> data;
 
-  CustomSearchDelegate(this.onSearch);
+  CustomSearchDelegate(this.data);
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -48,24 +60,56 @@ class CustomSearchDelegate extends SearchDelegate<String> {
     return IconButton(
       icon: Icon(Icons.arrow_back),
       onPressed: () {
-        close(context, '');
+        close(context, null);
       },
     );
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    onSearch(query);
-    return Center(
-      child: Text('Resultados para: $query'),
-    );
+    List<GeneralFoodType> filteredList = data.where((item) => item.name.contains(query)).toList();
+
+    if (filteredList.isEmpty) {
+      return Center(
+        child: Text("Item não encontrado"),
+      );
+    } else {
+      return ListView.builder(
+        itemCount: filteredList.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(filteredList[index].name),
+          );
+        },
+      );
+    }
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // Implemente aqui sugestões de pesquisa enquanto o usuário digita
-    return Center(
-      child: Text('Digite para buscar'),
-    );
+    List<GeneralFoodType> filteredList = data.where((item) => item.name.contains(query)).toList();
+
+    if (filteredList.isEmpty) {
+      return Center(
+        child: Text("Item não encontrado"),
+      );
+    } else {
+      return ListView.builder(
+        itemCount: filteredList.length > 5 ? 5 : filteredList.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(filteredList[index].name),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailsScreen(foodId: filteredList[index].id),
+                ),
+              );
+            },
+          );
+        },
+      );
+    }
   }
 }
